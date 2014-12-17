@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>drad and drop</h1>
+	<div id='main'>
+		<div class="source">
+			<div class="circle" draggable='true'></div>
+			<div class="circle" draggable='true'></div>
+			<div class="circle" draggable='true'></div>
+			<div class="circle" draggable='true'></div>
+		</div>
+		<div class="container">
+			
+		</div>
+	</div>
+	
+		<script>	
+				window.addEventListener('load', init);
+            var container;
+            var elementoArrastrandose;
+            
+
+			function init(){
+				var circles = document.getElementsByClassName('circle');
+                container = document.querySelector('.container');
+                container.addEventListener('dragover', dragSobreContainer, false);
+                container.addEventListener('dragleave', dragSalioContainer, false);
+                container.addEventListener('drop',manejarDrop,false);
+
+				for(i in circles){
+					var circle = circles[i];
+					var x = random(0,90);
+					var y = random(0,90);
+
+					if(typeof circle.style !="undefined"){
+						circle.style.top = y+'%';
+						circle.style.left = x+'%';
+                        circle.addEventListener('dragstart',dragIniciado);
+                        circle.addEventListener('dragend',dragFinalizado);
+					}
+
+				}
+                
+                function manejarDrop(e){
+                    e.preventDefault();
+                    var datos = e.dataTransfer.getData('text');
+                    this.innerHTML+=datos;
+                    elementoArrastrandose.parentNode.removeChild(elementoArrastrandose);
+                    this.classList.remove('over');
+                }
+                
+                function dragSobreContainer(e){
+                    e.preventDefault();
+                    this.classList('over');
+                    return false;
+                }
+                function dragSalioContainer(){
+                    this.classList.remove('over');
+                }
+                
+                function dragIniciado(e){
+                    this.style.backgroundColor = 'blue';
+                    elementoArrastrandose = this;
+                    var padre = document.createElement('p');
+                    var clon = this.cloneNode(true);
+                    padre.appendChild(clon);
+                    e.dataTransfer.setData('text', padre.innerHTML);
+                }
+                function dragFinalizado(e){
+                    this.style.backgroundColor = 'red';
+                }
+
+				function random(min , max){
+							return Math.floor(Math.random()* (max-min +1))+min;
+					}
+				}
+		</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

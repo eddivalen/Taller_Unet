@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websockets</title>
+</head>
+<body>
+   <input type="text" id="mensaje" placeholder="Ingrese mensaje">
+   <button id="enviar_mensaje">Enviar Mensaje</button>
+    <script>
+        var host = "ws://localhost:8000/Taller_Unet/websockets/server.php";
+var socket;
+        
+        window.addEventListener('load', init, false);
+        
+        function init(){
+           socket = new WebSocket(host);
+        
+        socket.addEventListener('open', function(){
+            console.log("conexion establecida en el servidor");
+            document.querySelector('#enviar_mensaje').addEventListener('click',function(){
+                socket.send(document.getElementById('mensaje').value);
+            }, false)
+        },false);
+        
+        socket.addEventListener('message',function(msg){
+            console.log(msg.data);
+        },false); 
+        }
+        
+    </script>
+</body>
+</html>

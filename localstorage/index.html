@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>localstorage</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="storage.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="split">
+            <h1>Cosas para hacer</h1>
+            <form id='todo_form'>
+                <label for="">Actividad</label>
+                <input type="text" placeholder="que debo hacer" autocomplete="off">
+                <input type="submit" value="registrar" id="date">
+            </form>
+        </div>
+        <div class="split">
+            <h1>cosas por hacer</h1>
+            <ol id="todo_list">
+                
+            </ol>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load',init, false);
+        var storage;
+        var clave = 'tutorial_storage';
+        
+        function init(){
+            storage = new lista(clave);
+            var formulario + document.querySelector('#todo_form');
+            formulario.addEventListener('submit', agregarActividad, false);
+            actualizarLista(storage.obtenerActividades());
+            
+        }
+        
+        function agregarActividad(e){
+          e.preventDefault();
+            var actividad = document.querySelector('#todo').value;
+            if(storage.agregarActividad(actividad)){
+                console.log('se registro Actividad');
+                actualizarLista(storage.obtenerActividades());
+            }
+            function actualizarLista(actividades){
+              var lista = document.querySelector('#todo_list');
+                lista.innerHTML = "";
+                
+                if(actividades !=null){
+                    for(i in actividades){
+                        var actividad = actividades[i];
+                        var elemento = document.createElement('li');
+                        elemento.innerHTML = actividad;
+                        lista.appendChild(elemento);
+                    }
+                }
+            }
+        }
+        
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
